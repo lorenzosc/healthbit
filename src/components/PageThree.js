@@ -46,7 +46,7 @@ const PageThree = ({ formData, setFormData }) => {
           <label>Preencha os tipos de alimento que você consome diariamente:</label>
           {foodOptions.map((food, index) => (
             <div key={index} className="checkbox-group">
-              <label>
+              <label style={{"fontWeight": "normal"}}>
                 <input
                   type="checkbox"
                   name="foodTypes"
