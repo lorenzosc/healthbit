@@ -3,7 +3,7 @@ export const dayOptions = Array.from({ length: 31 }, (_, i) => ({
     value: String(i + 1).padStart(2, '0'),
   }));
   
-  export const monthOptions = [
+export const monthOptions = [
     { label: 'Janeiro', value: '01' },
     { label: 'Fevereiro', value: '02' },
     { label: 'Março', value: '03' },
@@ -18,7 +18,7 @@ export const dayOptions = Array.from({ length: 31 }, (_, i) => ({
     { label: 'Dezembro', value: '12' },
   ];
   
-  export const yearOptions = Array.from({ length: 100 }, (_, i) => {
+export const yearOptions = Array.from({ length: 100 }, (_, i) => {
     const year = new Date().getFullYear() - i;
     return { label: String(year), value: String(year) };
   });
