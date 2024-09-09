@@ -1,24 +1,17 @@
 import React from 'react';
+import {conditions, conditionAlreadyHad, conditionNotKnow} from '../options/ConditionOptions'
 
 const PageTwo = ({ formData, setFormData }) => {
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+    const { name, value, checked } = e.target;
 
-  const conditions = [
-    { name: 'diabetes', label: 'Diabetes' },
-    { name: 'cardiacProblems', label: 'Problemas Cardíacos' },
-    { name: 'highBloodPressure', label: 'Pressão Alta' },
-    { name: 'asthma', label: 'Asma' },
-    { name: 'depression', label: 'Depressão' },
-    { name: 'anxiety', label: 'Ansiedade' },
-    { name: 'highCholesterol', label: 'Colesterol Alto' },
-    { name: 'backPain', label: 'Dores nas Costas' },
-    { name: 'jointPain', label: 'Dores nas Articulações' },
-    { name: 'headache', label: 'Dores de Cabeça' },
-    { name: 'cancer', label: 'Câncer' },
-    { name: 'stds', label: 'Infecções Sexualmente Transmissíveis' },
-  ];
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: checked 
+        ? [...(prevState[name] || []), value]
+        : prevState[name].filter(item => item !== value)
+    }));
+  };
 
   return (
     <div className="form-container">
@@ -32,22 +25,45 @@ const PageTwo = ({ formData, setFormData }) => {
             <label className="condition-group-label">{condition.label}</label>
             <div>
               <label>
-                <input type="radio" name={condition.name} value="Tenho" onChange={handleChange} />
+                <input 
+                  type="checkbox" 
+                  name={condition.name} 
+                  value="Tenho" 
+                  onChange={handleChange} 
+                  checked={formData[condition.name]?.includes("Tenho")}
+                />
                 Tenho
               </label>
               <label>
-                <input type="radio" name={condition.name} value="Não tenho" onChange={handleChange} />
+                <input 
+                  type="checkbox" 
+                  name={condition.name} 
+                  value="Não tenho" 
+                  onChange={handleChange} 
+                  checked={formData[condition.name]?.includes("Não tenho")}
+                />
                 Não tenho
               </label>
-              {condition.name === 'Diabetes' || condition.name === 'highBloodPressure' ||condition.name === 'highCholesterol'? (
+              {conditionNotKnow.includes(condition.name) ? (
                 <label>
-                  <input type="radio" name={condition.name} value="Não sei" onChange={handleChange} />
+                  <input 
+                    type="checkbox" 
+                    name={condition.name} 
+                    value="Não sei" onChange={handleChange} 
+                    checked={formData[condition.name]?.includes("Não sei")}
+                  />
                   Não sei
                 </label>
               ) : null}
-              {condition.name === 'cardiacProblems' || condition.name === 'backPain' || condition.name === 'jointPain' || condition.name === 'headache' || condition.name === 'cancer' || condition.name === 'stds' ? (
+              {conditionAlreadyHad.includes(condition.name) ? (
                 <label>
-                  <input type="radio" name={condition.name} value="Já tive, mas me curei" onChange={handleChange} />
+                  <input 
+                    type="checkbox" 
+                    name={condition.name} 
+                    value="Já tive, mas me curei" 
+                    onChange={handleChange} 
+                    checked={formData[condition.name]?.includes("Já tive, mas me curei")} 
+                  />
                   Já tive, mas me curei
                 </label>
               ) : null}
